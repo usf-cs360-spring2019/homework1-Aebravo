@@ -11,10 +11,72 @@
   <!-- bulma 0.7.2 and font awesome v5.7.1 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-</head>
+  <script type = "text/javascript" src = "/Users/angelobravo/Downloads/d3/d3.js"></script>
+  <script type = "text/javascript" src = "/Users/angelobravo/Downloads/shapes.js"></script>
+
+
+  </head>
 
 <!-- body -->
 <body>
+  <script>
+
+  //here is my attempt at implementing d3, close but just need to get a little bit more familiar with html to execute everything properly
+function modifyCSV(input) {
+  var csv = d3.text(input);
+  var splitCSV = csv.split(', ');
+  return splitCSV;
+
+}
+
+function csvValues(input){
+    let csv = modifyCSV(input);
+    let map = d3.map();
+
+    var count = 28;
+    for(var i = 14; i < csv.length; i++){
+      if(count % 28 == 0) {
+      let incidentType = csv[i];
+
+      if(map.has(incidentType)) {
+        map.set(incidentType, map.get(incidentType) + 1);
+      }
+      else {
+        map.set(incidentType, 1)
+      }
+    }
+      count++;
+  }
+}
+
+var myData = csvValues("/Users/angelobravo/Downloads/Police_Department_Incident_Reports__2018_to_Present.csv");
+var incidents = myData.getKeys();
+
+incident.entries();
+
+var width = 500;
+var height = 500;
+
+var widthScale = d3.scale.linear()
+                    .domain([0, 50])
+                    .range([0,500]);
+
+var svg = d3.select("body")
+          .append("svg")
+          .attr("width",width)
+          .attr("height",height)
+
+//these are test values
+svg.selectAll("rect")
+          .data(incidents)
+          .enter()
+          .append("rect")
+          .attr("width", 50)
+          .attr("height", 50)
+          .attr("x", 50)
+          .attr("y", 50)
+
+</script>
 
   <!-- header -->
   <section class="hero is-primary is-bold">
@@ -22,10 +84,10 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          Visualization Assignment
+          Homework 1
         </h1>
         <h2 class="subtitle">
-          Full Name
+          Angelo Bravo
         </h2>
       </div>
     </div>
@@ -81,18 +143,20 @@
       <h2>Visualization 1</h2>
 
       <svg width="100%" height="400" style="background-color: whitesmoke; border: 1px solid black;">
+
       </svg>
 
       <h3>Interpretation</h3>
 
       <p>
-        If appropriate, provide a brief discussion of how to interpret this visualization (e.g. how the data is encoded) and how to interact with this visualization. Some of this discussion may not be necessary depending on the legends provided with the visualization.
-      </p>
-
-      <h3>Discussion</h3>
+        The visualizations can be found in the .png files labeled as prototypes in my github repository.
+        These are my captions for the prototypes:
+ 
 
       <p>
-        If appropriate, provide a brief discussion of the primary goal and findings of the visualization, any challenges encountered creating the visualization, and any other context as required by the assignment.
+        The bar chart depicts the frequency of incident types. Larceny theft is by far the most common.
+        This line graph depicts incident rate by month. There is minimal fluctuation each month.
+        The pie chart depicts the frequency of incidence types by percentage relative to other incidences. Larceny theft accounts for the largest percentage.
       </p>
 
       <h3>Credit</h3>
@@ -135,55 +199,13 @@
             </td>
 
             <td>
-              If appropriate, provide a brief justification for this level of functionality. Clearly state if this level was not implemented.
-            </td>
-          </tr>
-
-          <!-- c level functionality -->
-          <tr>
-            <td class="has-text-centered">
-              <i class="far fa-fw fa-check-circle has-text-success"></i>
-            </td>
-
-            <td class="has-text-centered">
-              C
-            </td>
-
-            <td>
-              If appropriate, provide a brief justification for this level of functionality. Clearly state if this level was not implemented.
-            </td>
-          </tr>
-
-          <!-- b level functionality -->
-          <tr>
-            <td class="has-text-centered">
-              <i class="far fa-fw fa-times-circle has-text-danger"></i>
-            </td>
-
-            <td class="has-text-centered">
-              B
-            </td>
-
-            <td>
-              If appropriate, provide a brief justification for this level of functionality. Clearly state if this level was not implemented.
+              Needed a little bit more time to put everything together. Had all the ideas (data processing, how d3 works, etc.), just need more practice with html in general to put everything together nicely in the timeframe.
             </td>
           </tr>
 
 
-          <!-- a level functionality -->
-          <tr>
-            <td class="has-text-centered">
-              <i class="far fa-fw fa-times-circle has-text-danger"></i>
-            </td>
 
-            <td class="has-text-centered">
-              A
-            </td>
 
-            <td>
-              If appropriate, provide a brief justification for this level of functionality. Clearly state if this level was not implemented.
-            </td>
-          </tr>
         <tbody>
       </table>
 
@@ -253,5 +275,6 @@
   </footer>
 
 <!-- end body and html -->
+
 </body>
 </html>
